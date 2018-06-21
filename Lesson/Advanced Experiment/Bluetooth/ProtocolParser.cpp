@@ -91,6 +91,7 @@ bool ProtocolParser::RecevData(void)
                 DEBUG_LOG(DEBUG_LEVEL_INFO, "RecevData end \n");
                 return true;
            } else {
+                //Serial.println(dat, HEX);
                 *m_pHeader++ = dat;
                 m_RecvDataIndex++;
                 if (m_RecvDataIndex == 1) {
@@ -228,11 +229,11 @@ bool ProtocolParser::SendPackage(ST_PROTOCOL *send_dat,int len)
     buffer[4] = send_dat->function;
     checksum = buffer[1] + buffer[2] + buffer[3] + buffer[4];
 
-   //  Serial.println(*send_dat->data);
-   // Serial.println(*(send_dat->data + 1 ));
+    // Serial.println(*send_dat->data);
+    // Serial.println(*(send_dat->data + 1 ));
     for(int i = 0; i < len; i++) {
        *(p_data+i) = *(send_dat->data + i);
-    //   Serial.println(*(p_data+i) );
+    // Serial.println(*(p_data+i) );
        checksum += *(send_dat->data + i);
     }
     *(p_data + len) = (checksum >> 8) & 0xFF;

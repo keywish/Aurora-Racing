@@ -73,8 +73,8 @@ void AuroraRacing::GoForward(void)
 {
     DEBUG_LOG(DEBUG_LEVEL_INFO, "GoForward\n");
     SetStatus(E_FORWARD);
-    // SetDirection(90);
-    Drive(90);
+    SetDirection(ServoBaseDegree);
+    Drive(ServoBaseDegree);
 }
 
 void AuroraRacing::GoBack(void)
@@ -88,7 +88,7 @@ void AuroraRacing::GoBack(void)
 void AuroraRacing::KeepStop(void)
 {
     DEBUG_LOG(DEBUG_LEVEL_INFO, "KeepStop\n");
-    SetDirection(90);
+    SetDirection(ServoBaseDegree);
     digitalWrite(PwmbPin, 0);
     if (E_DUAL_MODE == MotorDriveMode) {
         digitalWrite(Ain1Pin, LOW);
@@ -228,20 +228,20 @@ void AuroraRacing::SetDirection(int degree)
 {
     int servo_degree;
    // int diff = 90 - ServoBaseDegree;
-    if (degree > 360) {
+    if (degree > 360 ||  degree < 0) {
         DEBUG_ERR("degree set error =%d \n", degree);
         return;
     }
     Degree = degree;
     if (degree == 90 || degree == 270) {
         servo_degree = ServoBaseDegree;
-     } else if (degree >= 0 && degree < 180) {
+     } else if (degree >= 0 && degree <= 180) {
         servo_degree = ServoBaseDegree + 90 - degree;   // 180-degree-diff
-    } else if (degree > 180 && degree < 360) {
+    } else if (degree > 180 && degree <= 360) {
         servo_degree = degree - 270 + ServoBaseDegree;  // degree-180-diff
     }
-    if (servo_degree > 145) {
-        servo_degree = 145;
+    if (servo_degree > 140) {
+        servo_degree = 140;
     } else if (servo_degree < 0) {
         servo_degree = 0;
     }
