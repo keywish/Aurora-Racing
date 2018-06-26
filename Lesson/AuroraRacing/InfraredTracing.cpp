@@ -151,7 +151,13 @@ void InfraredTracing::end()
 
 byte InfraredTracing::getValue()
 {
-  value = dat;
+    dat = 0;
+    dat = digitalRead(ItPins[0]);
+    dat |= digitalRead(ItPins[1]) << 1;
+    dat |= digitalRead(ItPins[2]) << 2;
+    dat |= digitalRead(ItPins[3]) << 3;
+    dat |= digitalRead(ItPins[4]) << 4;
+    value = dat;
 	return value;
 }
 #endif

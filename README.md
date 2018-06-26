@@ -1,7 +1,11 @@
 # Please Contact Us
-Technical support email: baron@keywish-robot.com; ken@keywish-robot.com 
+Technical support email:ken@keywish-robot.com
 Sales email: cici@keywish-robot.com
 The latest information download address: https://github.com/keywish/Aurora-Racing
+
+![](https://github.com/keywish/Aurora-Racing/raw/master/Aurora-Racing.png)
+
+[Product introduction video](https://www.youtube.com/watch?v=0xUjQ-OniiI) </br>
 
 # Aurora-Racing Feature
 Aurora-Racing is a nose wheel steering turnning high speed Arduino smart robot car with automatic tracking of 5 road black lines, buzzer whistle, two RGB indicator light, infrared remote control, APP remote control via bluetooth, G-Sensor control, optional PS2 wireless remote control（ PS2 2.4G Wireless）</br>
@@ -12,4 +16,4 @@ Come with a CD,Including detailed description of the Aurora-Racing installation 
 
 # Required Best Buy Links
 [Buy on Amazon](https://www.amazon.com/dp/B07DDG2YQQ) </br>
-
+[Buy on Aliexpress](https://www.aliexpress.com/store/product/Keywish-Smart-Remote-Control-Car-Kit-High-Speed-Racing-Car-Robot-Building-Assembly-Kit-For-Arduino/3269016_32885519995.html?spm=2114.12010615.8148356.3.5db35830i611z2) </br>
