@@ -95,6 +95,7 @@ public :
     void LightOff(E_RGB_INDEX index = E_RGB_ALL);
     void SetBuzzerPin(uint8_t pin = AR_BUZZER_PIN);
     void Sing(byte songName);
+    float PianoSing(byte b[]);
     void SetInfraredTracingPin(uint8_t Pin1 = AR_INFRARED_TRACING_PIN1, uint8_t Pin2 = AR_INFRARED_TRACING_PIN2, uint8_t Pin3 = AR_INFRARED_TRACING_PIN3, uint8_t Pin4 = AR_INFRARED_TRACING_PIN4, uint8_t Pin5 = AR_INFRARED_TRACING_PIN5);
     int SetPs2xPin(uint8_t clk = AR_PS2X_CLK, uint8_t cmd = AR_PS2X_CMD, uint8_t att = AR_PS2X_CS, uint8_t dat = AR_PS2X_DAT);
     int ResetPs2xPin(void);

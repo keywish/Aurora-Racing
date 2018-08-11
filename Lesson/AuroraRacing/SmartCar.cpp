@@ -1,6 +1,6 @@
 #include "SmartCar.h"
 #include "debug.h"
-SmartCar::SmartCar(String name, byte type, byte addr, E_SMARTCAR_CONTROL_MODE control_mode = E_BLUTOOTH_CONTROL)
+SmartCar::SmartCar(String name, byte type, byte addr, E_SMARTCAR_CONTROL_MODE control_mode = E_BLUETOOTH_CONTROL)
 {
     SmartCarName = name;
     SmartCarType = type;
@@ -20,7 +20,7 @@ SmartCar::~SmartCar()
 
 void SmartCar::SetControlMode(E_SMARTCAR_CONTROL_MODE mode)
 {
-    if (mode < E_SMARTCAR_CONTROL_MAX && mode > 0)
+    if (mode < E_SMARTCAR_CONTROL_MAX && mode >= 0)
     mControlMode = mode;
 }
 
