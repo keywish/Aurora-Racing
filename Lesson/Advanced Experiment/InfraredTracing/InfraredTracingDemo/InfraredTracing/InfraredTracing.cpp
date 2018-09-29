@@ -12,11 +12,11 @@ ISR(TIMER_INTR_NAME)
     // Serial.println("ISR");
     // Serial.println(millis());
     dat = 0;
-    dat = digitalRead(ItPins[0]);
-    dat |= digitalRead(ItPins[1]) << 1;
+    dat = digitalRead(ItPins[4]);
+    dat |= digitalRead(ItPins[3]) << 1;
     dat |= digitalRead(ItPins[2]) << 2;
-    dat |= digitalRead(ItPins[3]) << 3;
-    dat |= digitalRead(ItPins[4]) << 4;
+    dat |= digitalRead(ItPins[1]) << 3;
+    dat |= digitalRead(ItPins[0]) << 4;
     //Serial.println(dat,BIN);
 }
 
@@ -71,7 +71,7 @@ InfraredTracing::InfraredTracing(byte pin1, byte pin2, byte pin3, byte pin4)
     ItPins[3] = InfraredTracingPin4;
     value = 0;
     InfraredTracingMode = E_INFRARED_SENSOR_4;
-	  begin();
+    begin();
 }
 
 InfraredTracing::InfraredTracing(byte pin1, byte pin2, byte pin3, byte pin4, byte pin5)
@@ -151,6 +151,6 @@ void InfraredTracing::end()
 byte InfraredTracing::getValue()
 {
   value = dat;
-	return value;
+  return value;
 }
 #endif

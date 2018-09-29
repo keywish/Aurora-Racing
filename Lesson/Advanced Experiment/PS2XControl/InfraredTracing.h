@@ -53,11 +53,12 @@
 #define  IT_ALL_BLACK     0b00000
 #define  IT_ALL_WHITE     0b11111
 #define  IT_LEFT1         0b01111
-#define  IT_LEFT2         0b10111
+#define  IT_LEFT2         0b00111
+#define  IT_LEFT3         0b10111
 #define  IT_CENTER        0b11011
 #define  IT_RIGHT1        0b11101
-#define  IT_RIGHT2        0b11110
-
+#define  IT_RIGHT2        0b11100
+#define  IT_RIGHT3        0B11110
 // information for the interrupt handler
 typedef enum {
 	E_INFRARED_SENSOR_2,

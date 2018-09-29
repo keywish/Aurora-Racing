@@ -53,8 +53,8 @@ void AuroraRacing::init(void)
         pinMode(PwmaPin, OUTPUT);
         digitalWrite(PwmaPin, HIGH);
     } else {
-        mForwardServo->attach(ServoPin, 10, 160);
-        SetServoBaseDegree(90);
+        mForwardServo->attach(ServoPin, 0, 160);
+        //SetServoBaseDegree(90);
     }
     //keep TB6612 BIN stop
     pinMode(Bin1Pin, OUTPUT);
@@ -73,7 +73,7 @@ void AuroraRacing::GoForward(void)
 {
     DEBUG_LOG(DEBUG_LEVEL_INFO, "GoForward\n");
     SetStatus(E_FORWARD);
-    SetDirection(ServoBaseDegree);
+    SetDirection(90);
     Drive(ServoBaseDegree);
 }
 
@@ -88,7 +88,7 @@ void AuroraRacing::GoBack(void)
 void AuroraRacing::KeepStop(void)
 {
     DEBUG_LOG(DEBUG_LEVEL_INFO, "KeepStop\n");
-    SetDirection(ServoBaseDegree);
+    SetDirection(90);
     digitalWrite(PwmbPin, 0);
     if (E_DUAL_MODE == MotorDriveMode) {
         digitalWrite(Ain1Pin, LOW);
