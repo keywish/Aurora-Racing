@@ -91,6 +91,7 @@ public :
     void SetServoPin(uint8_t pin = AR_SERVO_PIN);
     void SetServoBaseDegree(uint8_t base = 90);
     void SetRgbPin(uint8_t pin = AR_RGB_PIN);
+    void SetRgbLight(long Color = RGB_WHITE);
     void LightOn(E_RGB_INDEX index = E_RGB_ALL, long Color = RGB_WHITE);
     void LightOff(E_RGB_INDEX index = E_RGB_ALL);
     void SetBuzzerPin(uint8_t pin = AR_BUZZER_PIN);

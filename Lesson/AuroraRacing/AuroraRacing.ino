@@ -80,6 +80,9 @@ void HandleBloothRemote()
                 // mAuroraRacing.Sing();
                 // mAuroraRacing.PianoSing(mProtocol->GetPianoSing());
                 break;
+            case E_LED:
+                mAuroraRacing.SetRgbLight(mProtocol->GetRgbValue());
+                break;
             case E_VERSION:
                 break;
         }

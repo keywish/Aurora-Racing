@@ -224,6 +224,13 @@ void AuroraRacing::LightOff(E_RGB_INDEX index = E_RGB_ALL)
     mRgb->show();
 }
 
+void AuroraRacing::SetRgbLight(long Color = RGB_WHITE)
+{
+    mRgb->setColor(0, Color);
+    DEBUG_LOG(DEBUG_LEVEL_INFO, "Color： %d\n", Color);
+    mRgb->show();
+}
+
 void AuroraRacing::SetDirection(int degree)
 {
     int servo_degree;
