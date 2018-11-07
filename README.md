@@ -1,19 +1,35 @@
 # Please Contact Us
-Technical support email:ken@keywish-robot.com
-Sales email: cici@keywish-robot.com
+Technical support email:ken@keywish-robot.com  
+Sales email: cici@keywish-robot.com  
 The latest information download address: https://github.com/keywish/Aurora-Racing
+# Aurora-racing
+![](https://github.com/keywish/Aurora-Racing/blob/master/Aurora-Racing.png)
 
-![](https://github.com/keywish/Aurora-Racing/raw/master/Aurora-Racing.png)
+# Component List  
+![](https://github.com/keywish/Aurora-Racing/blob/master/Component%20list.jpg) 
 
-[Product introduction video](https://www.youtube.com/watch?v=0xUjQ-OniiI) </br>
+# Product Introduct
+Aurora-Racing, as a 4-wheel multi-function smart racing car, we chosen Arduino uno r3 as its control board. It’s different from the other 4-wheel’s arduino cars, it is a rear-wheel-driving and front-steering. It shares the same principle with professional remote racing car, which the direction can be controlled by the two pull rods powered by the steering engine,the structure of the back wheel is a whole Aluminium body;   We adopt all metal gear motor,two Flanged bearings are used in back wheels to increase the flexibility of the motor.
+Chosen ATMEGA328P-PU as its main controller and TB6612FGN as its motor drive chip, Aurora-Racing is a multi-function smart racing car, compared to the traditional race, Aurora-Racing is equipped wireless control (Bluetooth, infrared remote control,etc.) and infrared trace, which can trace automatically. Of course, you can also add or cut off some functions if you like, for example, obstacle evading, adaptation for the PSP gamepad, WIFI controlling or mechanical arm. 
+Offer enough learning material,technical manual, detailed examples. Hand in hand teaches you from the beginning to the mastery. You can easily get started and achieve the functions you want.
 
 # Aurora-Racing Feature
-Aurora-Racing is a nose wheel steering turnning high speed Arduino smart robot car with automatic tracking of 5 road black lines, buzzer whistle, two RGB indicator light, infrared remote control, APP remote control via bluetooth, G-Sensor control, optional PS2 wireless remote control（ PS2 2.4G Wireless）</br>
-Aurora-Racing use Front wheel steering mode which is different from other arduino cars.MG996 servo motor as the front wheel steering drive,you will find very faster and smoothly when you play.Types 370 motors as the rear wheel drive motor controlled by TB6612FNG motor driver shield. There come with a 12V 2000mA large capacity lithium battery which endurance for two hours</br>
-Equipped with Bluetooth 4 module, which has a longer transmission distance and faster connection speed. Support Android App control, support fast connection (less than 1s connection), support mobile phone gravity induction control</br>
-Aurora-Racing can support 5 way infrared black line automatic tracking, a buzzer as a trumpet, two RGB as intelligent car lights, reserved PS2 remote control interface, which support the PS2 wireless remote control</br>
-Come with a CD,Including detailed description of the Aurora-Racing installation steps, contains 3D installation animation, and detailed install tutorial video will uploaded onto YouTube. The CD contains test progrm and the module application for each module, in the end there is a powerful application which connect all moudles' functions. We will continuously update product functions and courseware contents and publish them to Github in real time</br>
+*	5 road black line tracing module</br>
+* High powerfull metal speed-reduction motor</br>
+*	Flange cup type bearing</br>
+*	Integral stamping molding kit,easier Installation,tighter</br>
+*	3000mAH,12v,rechargeable li-battery,longer battery life,and more dynamic</br>
+*	2 RGB turn lights</br>
+*	Buzzer Turn around reminder</br>
+*	Infrared remote control</br>
+*	Android App control</br>
+
 
 # Required Best Buy Links
 [Buy on Amazon](https://www.amazon.com/dp/B07DDG2YQQ) </br>
 [Buy on Aliexpress](https://www.aliexpress.com/store/product/Keywish-Smart-Remote-Control-Car-Kit-High-Speed-Racing-Car-Robot-Building-Assembly-Kit-For-Arduino/3269016_32885519995.html?spm=2114.12010615.8148356.3.5db35830i611z2) </br>
+
+# Video Links
+[Component introduction](https://www.youtube.com/watch?v=y4f7S6RWRJ0) </br>
+[Function](https://www.youtube.com/watch?v=STrWVbSHGhI&t=22s)</br>
+[Assembly](https://www.youtube.com/watch?v=JEvklHLsoTQ)</br>
