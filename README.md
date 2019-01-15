@@ -5,8 +5,6 @@ The latest information download address: https://github.com/keywish/Aurora-Racin
 # Aurora-racing
 ![](https://github.com/keywish/Aurora-Racing/blob/master/Aurora-Racing.png)
 
-# Component List  
-![](https://github.com/keywish/Aurora-Racing/blob/master/Component%20list.jpg) 
 
 # Product Introduct
 Aurora-Racing, as a 4-wheel multi-function smart racing car, we chosen Arduino uno r3 as its control board. It’s different from the other 4-wheel’s arduino cars, it is a rear-wheel-driving and front-steering. It shares the same principle with professional remote racing car, which the direction can be controlled by the two pull rods powered by the steering engine,the structure of the back wheel is a whole Aluminium body;   We adopt all metal gear motor,two Flanged bearings are used in back wheels to increase the flexibility of the motor.
