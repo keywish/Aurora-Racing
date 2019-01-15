@@ -45,22 +45,26 @@
 ProtocolParser *mProtocol = new ProtocolParser();
 AuroraRacing mAuroraRacing(mProtocol, SERVO_PIN, BIN1_PIN, BIN2_PIN, PWMB_PIN, STANBY_PIN);
 byte Ps2xStatus, Ps2xType;
-ST_PROTOCOL SendData;
 
 void setup() {
     Serial.begin(9600);
     mAuroraRacing.init();
-    mAuroraRacing.SetServoBaseDegree(80);
+    mAuroraRacing.SetServoBaseDegree(88);
     mAuroraRacing.SetControlMode(E_BLUETOOTH_CONTROL);
     mAuroraRacing.SetIrPin(IR_PIN);
     mAuroraRacing.SetBuzzerPin(BUZZER_PIN);
     mAuroraRacing.SetRgbPin(RGB_PIN);
     mAuroraRacing.Sing(S_connection);
+    // Infrared Tracing pins conflig with Ps2x pins
+    // mAuroraRacing.SetInfraredTracingPin(AR_INFRARED_TRACING_PIN1, AR_INFRARED_TRACING_PIN2, AR_INFRARED_TRACING_PIN3, AR_INFRARED_TRACING_PIN4, AR_INFRARED_TRACING_PIN5);
+    delay(500);  //added delay to give wireless ps2 module some time to startup, before configuring it
+   // Ps2xStatus = mAuroraRacing.SetPs2xPin(AR_PS2X_CLK, AR_PS2X_CMD, AR_PS2X_CS, AR_PS2X_DAT);
     mAuroraRacing.SetDirection(90);
     mAuroraRacing.SetSpeed(0);
+ //   Ps2xType = mAuroraRacing.mPs2x->readType();
 }
 
-void HandleBloothRemote()
+void HandleBluetoothRemote()
 {
     if (mProtocol->ParserPackage()) {
         switch (mProtocol->GetRobotControlFun()) {
@@ -72,14 +76,7 @@ void HandleBloothRemote()
                 break;
             case E_ROBOT_CONTROL_SPEED:
                 mAuroraRacing.SetSpeed(mProtocol->GetRobotSpeed());
-                break;
-            case E_CONTROL_MODE:
-                mAuroraRacing.SetControlMode(mProtocol->GetControlMode());
-                break;
-            case E_BUZZER:
-                // mAuroraRacing.Sing();
-                // mAuroraRacing.PianoSing(mProtocol->GetPianoSing());
-                break;
+                break ;
             case E_VERSION:
                 break;
         }
@@ -122,46 +119,32 @@ void HandleInfraredTracing(void)
 {
     switch (mAuroraRacing.mInfraredTracing->getValue()) {
      case IT_ALL_BLACK:
-        mAuroraRacing.KeepStop();
-        break;
      case IT_ALL_WHITE:
         mAuroraRacing.KeepStop();
         break;
      case IT_CENTER:
-        mAuroraRacing.SetSpeed(35);
+        mAuroraRacing.SetSpeed(30);
         mAuroraRacing.GoForward();
         break;
      case IT_RIGHT1:
-        mAuroraRacing.SetDirection(70);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(25);
+        mAuroraRacing.SetDirection(30);
+        mAuroraRacing.SetSpeed(30);
+        mAuroraRacing.TurnRight(true);
         break;
      case IT_RIGHT2:
-        mAuroraRacing.SetDirection(50);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(24);
-        break;
-     case IT_RIGHT3:
         mAuroraRacing.SetDirection(40);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(22);
-       delay(450);
+        mAuroraRacing.SetSpeed(30);
+        mAuroraRacing.TurnRight(true);
         break;
      case IT_LEFT1:
-        mAuroraRacing.SetDirection(170);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(22);
-        delay(460);
+        mAuroraRacing.SetDirection(-30);
+        mAuroraRacing.SetSpeed(30);
+        mAuroraRacing.TurnLeft(true);
         break;
      case IT_LEFT2:
-        mAuroraRacing.SetDirection(130);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(25);
-        break;
-    case IT_LEFT3:
-        mAuroraRacing.SetDirection(110);
-        mAuroraRacing.Drive();
-        mAuroraRacing.SetSpeed(24);
+        mAuroraRacing.SetDirection(-40);
+        mAuroraRacing.SetSpeed(30);
+        mAuroraRacing.TurnLeft(true);
         break;
    }
 }
@@ -217,33 +200,13 @@ void HandlePs2xRemote()
     }
     delay(50);
 }
-
-void SendTracingSignal(){
-    byte TracingSignal = mAuroraRacing.mInfraredTracing->getValue();
-    SendData.start_code = 0xAA;
-    SendData.type = 0x01;
-    SendData.addr = 0x01;
-    SendData.function = E_INFRARED_TRACKING;
-    SendData.data = (byte *)&TracingSignal;
-    SendData.len = 7;
-    SendData.end_code = 0x55;
-    mProtocol->SendPackage(&SendData, 1);
-}
-
 void loop() {
-    static byte mode;
+
     mProtocol->RecevData();
-    if (mAuroraRacing.GetControlMode() !=  E_BLUETOOTH_CONTROL &&  mAuroraRacing.GetControlMode() != E_PIANO_MODE) {
-        if (mProtocol->ParserPackage()) {
-            if (mProtocol->GetRobotControlFun() == E_CONTROL_MODE) {
-            mAuroraRacing.SetControlMode(mProtocol->GetControlMode());
-           }
-        }
-    }
     switch (mAuroraRacing.GetControlMode()) {
         case E_BLUETOOTH_CONTROL:
-            HandleBloothRemote();
-           // DEBUG_LOG(DEBUG_LEVEL_INFO, "E_BLUTOOTH_CONTROL \n");
+            HandleBluetoothRemote();
+           // DEBUG_LOG(DEBUG_LEVEL_INFO, "E_BLUETOOTH_CONTROL \n");
             break;
         case E_INFRARED_REMOTE_CONTROL:
             byte irKeyCode;
@@ -259,22 +222,10 @@ void loop() {
             break;
         case E_INFRARED_TRACKING_MODE:
             // DEBUG_LOG(DEBUG_LEVEL_INFO, "E_INFRARED_TRACKING \n");
-            if(mode != E_INFRARED_TRACKING_MODE) {
-                mAuroraRacing.SetInfraredTracingPin(AR_INFRARED_TRACING_PIN1, AR_INFRARED_TRACING_PIN2, AR_INFRARED_TRACING_PIN3, AR_INFRARED_TRACING_PIN4, AR_INFRARED_TRACING_PIN5);
-                delay(200);
-                mode = E_INFRARED_TRACKING_MODE;
-            }
             mAuroraRacing.SetInfraredTracingPin(AR_INFRARED_TRACING_PIN1, AR_INFRARED_TRACING_PIN2, AR_INFRARED_TRACING_PIN3, AR_INFRARED_TRACING_PIN4, AR_INFRARED_TRACING_PIN5);
             HandleInfraredTracing();
-            SendTracingSignal();
             break;
         case E_PS2_REMOTE_CONTROL:
-            if(mode != E_PS2_REMOTE_CONTROL) {
-              Ps2xStatus = mAuroraRacing.SetPs2xPin(AR_PS2X_CLK, AR_PS2X_CMD, AR_PS2X_CS, AR_PS2X_DAT);
-              Ps2xType = mAuroraRacing.mPs2x->readType();
-              delay(500);
-              mode = E_PS2_REMOTE_CONTROL;
-            }
             while (Ps2xStatus != 0) { //skip loop if no controller found
                 delay(500);
                 Ps2xStatus = mAuroraRacing.ResetPs2xPin();
@@ -284,15 +235,6 @@ void loop() {
             if (Ps2xType != 2) {
                 // Guitar Hero Controller
                 HandlePs2xRemote();
-            }
-            break;
-         case E_PIANO_MODE:
-            if (mProtocol->ParserPackage()) {
-                if (mProtocol->GetRobotControlFun() == E_BUZZER) {
-                    mAuroraRacing.PianoSing(mProtocol->GetPianoSing());
-                } else if (mProtocol->GetRobotControlFun() == E_CONTROL_MODE) {
-                    mAuroraRacing.SetControlMode(mProtocol->GetControlMode());
-                }
             }
             break;
         default:

@@ -2,6 +2,7 @@
 #define   _PROTOCOLPARSER_H_
 #include "Arduino.h"
 #include "Protocol.h"
+#include "SmartCar.h"
 #include <stdint.h>
 
 #define BUFFER_SIZE 24
@@ -13,7 +14,7 @@ public:
     ~ProtocolParser();
     bool RecevData(char *data, size_t len);
     bool RecevData(void);
-    bool ParserPackage(char *data = NULL);
+    bool ParserPackage(byte *data = NULL );
     E_TYPE GetRobotType();
     uint8_t GetRobotAddr();
     E_CONTOROL_FUNC GetRobotControlFun();

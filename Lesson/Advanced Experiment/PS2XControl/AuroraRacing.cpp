@@ -4,8 +4,8 @@
 #include "debug.h"
 
 // For single motor drive
-// AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t Servo_Pin = AR_SERVO_PIN, uint8_t bin1 = AR_BIN1_PIN, uint8_t bin2 = AR_BIN2_PIN, uint8_t pwmb = AR_PWMB_PIN, uint8_t standby = AR_STANBY_PIN):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUTOOTH_CONTROL)
-AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t Servo_Pin, uint8_t bin1, uint8_t bin2, uint8_t pwmb, uint8_t standby):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUTOOTH_CONTROL)
+// AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t Servo_Pin = AR_SERVO_PIN, uint8_t bin1 = AR_BIN1_PIN, uint8_t bin2 = AR_BIN2_PIN, uint8_t pwmb = AR_PWMB_PIN, uint8_t standby = AR_STANBY_PIN):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUETOOTH_CONTROL)
+AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t Servo_Pin, uint8_t bin1, uint8_t bin2, uint8_t pwmb, uint8_t standby):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUETOOTH_CONTROL)
 {
     this->Bin1Pin = bin1;
     this->Bin2Pin = bin2;
@@ -18,8 +18,8 @@ AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t Servo_Pin, uint8_t b
 }
 /*
 // For dual motor drive
-//AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t ain1 = AR_AIN1_PIN, uint8_t ain2 = AR_AIN2_PIN, uint8_t pwma = AR_PWMA_PIN, uint8_t bin1 = AR_BIN1_PIN, uint8_t bin2 = AR_BIN2_PIN, uint8_t pwmb = AR_PWMB_PIN, uint8_t standby = AR_STANBY_PIN):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUTOOTH_CONTROL)
-AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t ain1, uint8_t ain2, uint8_t pwma, uint8_t bin1, uint8_t bin2, uint8_t pwmb, uint8_t standby):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUTOOTH_CONTROL)
+//AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t ain1 = AR_AIN1_PIN, uint8_t ain2 = AR_AIN2_PIN, uint8_t pwma = AR_PWMA_PIN, uint8_t bin1 = AR_BIN1_PIN, uint8_t bin2 = AR_BIN2_PIN, uint8_t pwmb = AR_PWMB_PIN, uint8_t standby = AR_STANBY_PIN):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUETOOTH_CONTROL)
+AuroraRacing::AuroraRacing(ProtocolParser *Package, uint8_t ain1, uint8_t ain2, uint8_t pwma, uint8_t bin1, uint8_t bin2, uint8_t pwmb, uint8_t standby):SmartCar("Aurora-Racing", E_AURORA_RACING, 0x01, E_BLUETOOTH_CONTROL)
 {
     this->Ain1Pin = ain1;
     this->Ain2Pin = ain2;
@@ -170,32 +170,52 @@ void AuroraRacing::Drive(int degree)
     analogWrite(PwmbPin, value);
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetIrPin(uint8_t pin = AR_IR_PIN)
+#else
+void AuroraRacing::SetIrPin(uint8_t pin )
+#endif
 {
     IrPin = pin;
     mIrRecv = new IRremote (IrPin);
     mIrRecv->begin();  // Initialize the infrared receiver
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetBuzzerPin(uint8_t pin = AR_BUZZER_PIN)
+#else
+void AuroraRacing::SetBuzzerPin(uint8_t pin )
+#endif
 {
     BuzzerPin = pin;
     mBuzzer = new Buzzer();
     mBuzzer->setpin(BuzzerPin);
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetServoPin(uint8_t Servo_Pin = AR_SERVO_PIN)
+#else
+void AuroraRacing::SetServoPin(uint8_t Servo_Pin )
+#endif
 {
      mForwardServo = new Servo();
      ServoPin = Servo_Pin;
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetServoBaseDegree(uint8_t base = 90)
+#else
+void AuroraRacing::SetServoBaseDegree(uint8_t base)
+#endif
 {
     ServoBaseDegree = base;
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetRgbPin(uint8_t pin = AR_RGB_PIN)
+#else
+void AuroraRacing::SetRgbPin(uint8_t pin )
+#endif
 {
     RgbPin = pin;
     mRgb = new RGBLed(7, RgbPin);
@@ -203,7 +223,11 @@ void AuroraRacing::SetRgbPin(uint8_t pin = AR_RGB_PIN)
    // mRgb->reset();
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::LightOn(E_RGB_INDEX index = E_RGB_ALL, long Color = RGB_WHITE)
+#else
+void AuroraRacing::LightOn(E_RGB_INDEX index , long Color )
+#endif
 {
     // mRgb->reset();
     if (index == E_RGB_ALL) {
@@ -213,7 +237,12 @@ void AuroraRacing::LightOn(E_RGB_INDEX index = E_RGB_ALL, long Color = RGB_WHITE
     }
     mRgb->show();
 }
+
+#if ARDUINO > 10609
 void AuroraRacing::LightOff(E_RGB_INDEX index = E_RGB_ALL)
+#else
+void AuroraRacing::LightOff(E_RGB_INDEX index )
+#endif
 {
   //  mRgb->reset();
     if (index == E_RGB_ALL) {
@@ -249,7 +278,11 @@ void AuroraRacing::SetDirection(int degree)
     mForwardServo->write(servo_degree);
 }
 
+#if ARDUINO > 10609
 void AuroraRacing::SetInfraredTracingPin(uint8_t Pin1 = AR_INFRARED_TRACING_PIN1, uint8_t Pin2 = AR_INFRARED_TRACING_PIN2, uint8_t Pin3 = AR_INFRARED_TRACING_PIN3, uint8_t Pin4 = AR_INFRARED_TRACING_PIN4, uint8_t Pin5 = AR_INFRARED_TRACING_PIN5)
+#else
+void AuroraRacing::SetInfraredTracingPin(uint8_t Pin1 , uint8_t Pin2 , uint8_t Pin3 , uint8_t Pin4 , uint8_t Pin5 )
+#endif
 {
     static bool InfraredTracingInit = false;
     if (!InfraredTracingInit) {
@@ -264,7 +297,11 @@ void AuroraRacing::SetInfraredTracingPin(uint8_t Pin1 = AR_INFRARED_TRACING_PIN1
     }
 }
 
+#if ARDUINO > 10609
 int AuroraRacing::SetPs2xPin(uint8_t clk = AR_PS2X_CLK, uint8_t cmd = AR_PS2X_CMD, uint8_t att = AR_PS2X_CS, uint8_t dat = AR_PS2X_DAT)
+#else
+int AuroraRacing::SetPs2xPin(uint8_t clk , uint8_t cmd , uint8_t att , uint8_t dat )
+#endif
 {
     static bool Ps2xInit = false;
     int error = 0 ;
@@ -425,7 +462,7 @@ void AuroraRacing::SendBatteryPackage(byte *battery_value)
 {
     ST_PROTOCOL send_dat;
     send_dat.start_code = PROTOCOL_START_CODE;
-    send_dat.type = 0x01;
+    send_dat.type =(E_TYPE)0x01;
     send_dat.addr = 0x01;
     send_dat.function = E_BATTERY;
     send_dat.data = battery_value;

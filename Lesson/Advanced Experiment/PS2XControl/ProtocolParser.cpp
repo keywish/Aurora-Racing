@@ -1,9 +1,14 @@
 #include "Protocol.h"
 #include "ProtocolParser.h"
-#define DEBUG_LEVEL DEBUG_LEVEL_ERR
 #include "debug.h"
+#include "SmartCar.h"
+#define DEBUG_LEVEL DEBUG_LEVEL_ERR
 
+#if ARDUINO > 10609
 ProtocolParser::ProtocolParser(byte startcode = PROTOCOL_START_CODE, byte endcode = PROTOCOL_END_CODE)
+#else
+ProtocolParser::ProtocolParser(byte startcode , byte endcode )
+#endif
 {
     m_recv_flag = false;
     m_send_success = false;
@@ -24,11 +29,14 @@ ProtocolParser::~ProtocolParser()
     m_pHeader = NULL;
 }
 
-bool ProtocolParser::ParserPackage(char *data = NULL)
+#if ARDUINO > 10609
+bool ProtocolParser::ParserPackage(byte *data = NULL)
+#else
+bool ProtocolParser::ParserPackage(byte *data )
+#endif
 {
     if (recflag) {
         recflag = false;
-        DEBUG_LOG(DEBUG_LEVEL_INFO, "RecevPackage start \n");
         if( data != NULL) {
             m_pHeader = data;
         } else {
@@ -79,6 +87,8 @@ bool ProtocolParser::RecevData(void)
             *m_pHeader++ = dat;
             m_RecvDataIndex = 0;
             avilable = true;
+            // Serial.println(dat, HEX);
+            DEBUG_LOG(DEBUG_LEVEL_INFO, "aviable\n");
             continue;
         }
         if (avilable) {
@@ -91,6 +101,7 @@ bool ProtocolParser::RecevData(void)
                 DEBUG_LOG(DEBUG_LEVEL_INFO, "RecevData end \n");
                 return true;
            } else {
+                //Serial.println(dat, HEX);
                 *m_pHeader++ = dat;
                 m_RecvDataIndex++;
                 if (m_RecvDataIndex == 1) {
@@ -105,7 +116,7 @@ bool ProtocolParser::RecevData(void)
                         m_pHeader = buffer;
                         avilable = false;
                         recflag = false;
-                        DEBUG_ERR("Send length > BUFFER_SIZE\n");
+                        Serial.println("preRecvLen\n");
                         return false;
                 }
 
@@ -113,7 +124,7 @@ bool ProtocolParser::RecevData(void)
                     for (int i = 0; i < BUFFER_SIZE; i++) {
                         DEBUG_LOG(DEBUG_LEVEL_ERR, "%x ", buffer[i]);
                     }
-                    DEBUG_ERR("buffer is error\n");
+                    Serial.println("buffer is error\n");
                     preRecvLen = 0;
                     m_pHeader = buffer;
                     avilable = false;
@@ -228,7 +239,7 @@ bool ProtocolParser::SendPackage(ST_PROTOCOL *send_dat,int len)
     buffer[4] = send_dat->function;
     checksum = buffer[1] + buffer[2] + buffer[3] + buffer[4];
 
-   //  Serial.println(*send_dat->data);
+  //  Serial.println(*send_dat->data);
    // Serial.println(*(send_dat->data + 1 ));
     for(int i = 0; i < len; i++) {
        *(p_data+i) = *(send_dat->data + i);

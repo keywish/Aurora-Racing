@@ -1,9 +1,14 @@
 #include "Protocol.h"
 #include "ProtocolParser.h"
-#define DEBUG_LEVEL DEBUG_LEVEL_ERR
 #include "debug.h"
+#include "SmartCar.h"
+#define DEBUG_LEVEL DEBUG_LEVEL_ERR
 
+#if ARDUINO > 10609
 ProtocolParser::ProtocolParser(byte startcode = PROTOCOL_START_CODE, byte endcode = PROTOCOL_END_CODE)
+#else
+ProtocolParser::ProtocolParser(byte startcode , byte endcode )
+#endif
 {
     m_recv_flag = false;
     m_send_success = false;
@@ -24,10 +29,14 @@ ProtocolParser::~ProtocolParser()
     m_pHeader = NULL;
 }
 
-bool ProtocolParser::ParserPackage(char *data = NULL)
+#if ARDUINO > 10609
+bool ProtocolParser::ParserPackage(byte *data = NULL)
+#else
+bool ProtocolParser::ParserPackage(byte *data )
+#endif
 {
-    if (m_recv_flag) {
-        m_recv_flag = false;
+    if (recflag) {
+        recflag = false;
         if( data != NULL) {
             m_pHeader = data;
         } else {
@@ -40,18 +49,18 @@ bool ProtocolParser::ParserPackage(char *data = NULL)
             check_sum += buffer[i];
         }
         if ((check_sum & 0xFFFF) != GetCheckSum()) {
-            DEBUG_ERR("check sum error \n");
-            for (int i = 0; i < m_PackageLength; i++) {
+             DEBUG_ERR("check sum error \n");
+        	 for (int i = 0; i < m_PackageLength; i++) {
                 DEBUG_LOG(DEBUG_LEVEL_ERR, "0x%x ", buffer[i]);
-            }
-        return false ;
+        	 }
+         return false ;
 	    }
-        recv->function = buffer[4];
-        recv->data = &buffer[5];
-        protocol_data_len = m_PackageLength - 8;
-        recv->end_code = buffer[m_RecvDataIndex];
-        DEBUG_LOG(DEBUG_LEVEL_INFO, "\nRecevPackage end \n");
-        return true;
+    	recv->function = buffer[4];
+    	recv->data = &buffer[5];
+    	protocol_data_len = m_PackageLength - 8;
+    	recv->end_code = buffer[m_RecvDataIndex];
+    	DEBUG_LOG(DEBUG_LEVEL_INFO, "\nRecevPackage end \n");
+    	return true;
 	}
     return false;
 }
@@ -88,7 +97,7 @@ bool ProtocolParser::RecevData(void)
                 *m_pHeader = dat;
                 m_RecvDataIndex++;
                 m_PackageLength = m_RecvDataIndex + 1;
-                m_recv_flag = true;
+                recflag = true;
                 DEBUG_LOG(DEBUG_LEVEL_INFO, "RecevData end \n");
                 return true;
            } else {
@@ -106,7 +115,7 @@ bool ProtocolParser::RecevData(void)
                         preRecvLen = 0;
                         m_pHeader = buffer;
                         avilable = false;
-                        m_recv_flag = false;
+                        recflag = false;
                         Serial.println("preRecvLen\n");
                         return false;
                 }
@@ -119,7 +128,7 @@ bool ProtocolParser::RecevData(void)
                     preRecvLen = 0;
                     m_pHeader = buffer;
                     avilable = false;
-                    m_recv_flag = false;
+                    recflag = false;
                     return false;
                  }
             }
@@ -198,15 +207,6 @@ int ProtocolParser::GetRobotDegree()
     }
 }
 
-int ProtocolParser::GetPianoSing()
-{
-    if (recv->function == E_BUZZER) {
-        return (recv->data);
-    } else {
-        return 0;
-    }
-}
-
 uint8_t ProtocolParser::GetProtocolDataLength()
 {
     return protocol_data_len;
@@ -215,15 +215,6 @@ uint8_t ProtocolParser::GetProtocolDataLength()
 uint8_t ProtocolParser::GetPackageLength()
 {
     return m_PackageLength;
-}
-
-byte ProtocolParser::GetControlMode()
-{
-    if (((E_CONTOROL_FUNC)recv->function) == E_CONTROL_MODE) {
-        return (byte)(*(recv->data));
-    } else {
-        return 0;
-    }
 }
 
 uint16_t ProtocolParser::GetCheckSum(void)
@@ -259,8 +250,7 @@ bool ProtocolParser::SendPackage(ST_PROTOCOL *send_dat,int len)
     *(p_data + len + 1) = checksum & 0xFF;
     *(p_data + len + 2) = send_dat->end_code;
 
-    Serial.write(buffer,len+8);
+    Serial.write(buffer,len);
     Serial.flush();
-    delay(100);
     return true;
 }

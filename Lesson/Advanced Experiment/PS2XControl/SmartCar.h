@@ -6,7 +6,7 @@
 
 typedef enum
 {
-    E_BLUTOOTH_CONTROL = 0,
+    E_BLUETOOTH_CONTROL = 0,
     E_INFRARED_REMOTE_CONTROL,
     E_INFRARED_TRACKING_MODE,
     E_INFRARED_AVOIDANCE,
@@ -37,7 +37,7 @@ private :
     E_SMARTCAR_CONTROL_MODE mControlMode;
     E_SMARTCAR_STATUS mStatus;
 public :
-    SmartCar(String name, byte type, byte addr, E_SMARTCAR_CONTROL_MODE control_mode = E_BLUTOOTH_CONTROL);
+    SmartCar(String name, byte type, byte addr, E_SMARTCAR_CONTROL_MODE control_mode = E_BLUETOOTH_CONTROL);
     ~SmartCar();
     uint8_t BatteryValue;
     uint8_t Temperature;

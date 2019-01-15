@@ -110,9 +110,24 @@ InfraredTracing::InfraredTracing(byte pin1, byte pin2, byte pin3, byte pin4, byt
  */
 void InfraredTracing::begin()
 {
-   // sei();  // enable interrupts
-  //  Timer1.initialize(5000);
-  //  Timer1.attachInterrupt(autoBalance); // 5ms attach the service routine here
+
+  cli();
+  // setup pulse clock timer interrupt
+  //Prescale /8 (16M/8 = 0.5 microseconds per tick)
+  // Therefore, the timer interval can range from 0.5 to 128 microseconds
+  // depending on the reset value (255 to 0)
+  IT_TIMER_CONFIG_NORMAL();
+
+  //Timer2 Overflow Interrupt Enable
+  IT_TIMER_ENABLE_INTR;
+
+  // TIMER_RESET;
+
+  sei();  // enable interrupts
+
+  // initialize state machine variables
+  value = 0;
+
 }
 
 /**
