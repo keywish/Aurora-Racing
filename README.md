@@ -26,9 +26,5 @@ Offer enough learning material,technical manual, detailed examples. Hand in hand
 [Buy on Amazon](https://www.amazon.com/dp/B07DDG2YQQ) </br>
 [Buy on Aliexpress](https://www.aliexpress.com/store/product/Keywish-Smart-Remote-Control-Car-Kit-High-Speed-Racing-Car-Robot-Building-Assembly-Kit-For-Arduino/3269016_32885519995.html?spm=2114.12010615.8148356.3.5db35830i611z2) </br>
 
-# Video Links
-[Component introduction](https://www.youtube.com/watch?v=y4f7S6RWRJ0) </br>
-[Function](https://www.youtube.com/watch?v=STrWVbSHGhI&t=22s)</br>
-[Assembly](https://www.youtube.com/watch?v=JEvklHLsoTQ)</br>
 # Download Method
 ![](https://github.com/keywish/Aurora-Racing/blob/master/Aurora_Racing_DM.jpg)
