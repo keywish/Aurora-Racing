@@ -1,6 +1,6 @@
 # Please Contact Us
 Technical support email:abbott@emakefun.com  
-Sales email: cici@keywish-robot.com  
+Sales email: ken@keywish-robot.com  
 The latest information download address: https://github.com/keywish/Aurora-Racing
 # Aurora-racing
 ![](https://github.com/keywish/Aurora-Racing/blob/master/Aurora-Racing.png)
